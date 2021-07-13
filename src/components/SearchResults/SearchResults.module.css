@@ -1,0 +1,11 @@
+.searchResults {
+  width: 70rem;
+  margin: 1.6rem auto;
+}
+
+.searchResults__heading {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 1.6rem;
+}

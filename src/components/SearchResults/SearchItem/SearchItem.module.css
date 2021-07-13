@@ -1,0 +1,24 @@
+.searchItem {
+  padding: 2.4rem 0;
+  border-bottom: 1px solid var(--color-results-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.searchItem:first-child {
+  border-top: 1px solid var(--color-results-border);
+}
+
+.searchItem__heading {
+  font-size: 1.6rem;
+  color: var(--color-text-link);
+  margin-bottom: 0.5rem;
+}
+
+.searchItem__description {
+  font-size: 1.4rem;
+  text-align: left;
+}
