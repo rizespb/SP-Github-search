@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./SearchForm.module.css";
 import { reduxForm, Field } from "redux-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faSolid } from "@fortawesome/free-solid-svg-icons";
 
 const SearchForm = (props) => {
   return (

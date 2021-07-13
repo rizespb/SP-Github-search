@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SearchResults.module.css";
-import SearchItem from "./SearchItem/SearchItem";
+import SearchItemContainer from "./SearchItem/SearchItemContainer";
 
 const SearchResults = (props) => {
   const hasResults = !!props.totalCount;
@@ -8,7 +8,7 @@ const SearchResults = (props) => {
   let resultsArr;
   if (hasResults) {
     resultsArr = props.results.map((el) => (
-      <SearchItem
+      <SearchItemContainer
         title={el.full_name}
         description={el.description}
         url={el.url}
@@ -19,7 +19,7 @@ const SearchResults = (props) => {
   }
 
   return (
-    <div className={styles.searchResults}>
+    <div className={styles.searchResults} onClick={props.onClick}>
       {hasResults && (
         <div className={styles.searchResults__heading}>
           {props.totalCount.toLocaleString("en")} repository results
