@@ -6,7 +6,11 @@ import { makeSearchRequestTC } from "../../../redux/searchResult-reducer";
 class SearchFormContainer extends React.Component {
   onSubmit = (formData) => {
     console.log(formData);
-    this.props.makeSearchRequest(formData.searchKeywords);
+    this.props.makeSearchRequest(
+      formData.searchKeywords,
+      this.props.pageSize,
+      this.props.currentPage
+    );
   };
 
   render() {
@@ -14,10 +18,18 @@ class SearchFormContainer extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  pageSize: state.searchResults.pageSize,
+  currentPage: state.searchResults.currentPage,
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  makeSearchRequest: (searchKeywords) => {
-    dispatch(makeSearchRequestTC(searchKeywords));
+  makeSearchRequest: (searchKeywords, pageSize, currentPage) => {
+    dispatch(makeSearchRequestTC(searchKeywords, pageSize, currentPage));
   },
 });
 
-export default connect(null, mapDispatchToProps)(SearchFormContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchFormContainer);

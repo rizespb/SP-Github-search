@@ -5,9 +5,12 @@ import * as axios from "axios";
 // });
 
 export const searchAPI = {
-  getRepos(searchKeyWords = "tetris") {
+  getRepos(searchKeyWords = "tetris", pageSize, currentPage) {
     return axios.get(
-      `https://api.github.com/search/repositories?q=${searchKeyWords}+in:name`
+      `https://api.github.com/search/repositories?q=${searchKeyWords}+in:name&per_page=${pageSize}&page=${currentPage}`,
+      {
+        withcredentials: true,
+      }
     );
   },
 };
