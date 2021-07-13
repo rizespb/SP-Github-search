@@ -4,6 +4,7 @@ import { searchAPI } from "../api/api";
 const SET_SEARCH_RESULTS = "searchResult/SET_SEARCH_RESULTS";
 const SET_SEARCH_KEY_WORDS = "searchResult/SET_SEARCH_KEY_WORDS";
 const FETCHING_TOGGLE = "searchResult/FETCHING_TOGGLE";
+const CLEAR_SEARCH_RESULTS = "searchResult/CLEAR_SEARCH_RESULTS";
 
 const intialState = {
   results: [],
@@ -36,6 +37,15 @@ const searchResultsReducer = (state = intialState, action) => {
         isFetching: !state.isFetching,
       };
 
+    case CLEAR_SEARCH_RESULTS:
+      return {
+        ...state,
+        results: [],
+        totalCount: null,
+        searchKeyWords: "",
+        currentPage: 0,
+      };
+
     default:
       return state;
   }
@@ -53,6 +63,10 @@ const setSearchResultsAC = (results, totalCount) => ({
   type: SET_SEARCH_RESULTS,
   results,
   totalCount,
+});
+
+export const clearSearchResultsAC = () => ({
+  type: CLEAR_SEARCH_RESULTS,
 });
 
 const fetchingToggleAC = () => ({ type: FETCHING_TOGGLE });
@@ -81,6 +95,10 @@ export const makeSearchRequestTC = (searchKeyWords, pageSize, currentPage) => {
 
     dispatch(fetchingToggleAC());
   };
+};
+
+export const getRepoByIdTC = (id) => {
+  return (dispatch) => {};
 };
 
 export default searchResultsReducer;

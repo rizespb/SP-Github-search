@@ -4,8 +4,12 @@ import styles from "./SearchItem.module.css";
 
 const SearchItem = (props) => {
   return (
-    <div className={styles.searchItem}>
-      <Link to={`repo/:${props.id}`} className={styles.searchItem__heading}>
+    <div className={styles.searchItem} id={props.id} type="SearchItem">
+      <Link
+        to={`repo/${props.title}`}
+        className={styles.searchItem__heading}
+        onClick={props.setCurrentRepo}
+      >
         {props.title}
       </Link>
       <span className={styles.searchItem__description}>

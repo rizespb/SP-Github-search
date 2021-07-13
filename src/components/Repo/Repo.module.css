@@ -1,0 +1,55 @@
+.repo {
+  width: 70rem;
+  margin: 1.6rem auto;
+  text-align: left;
+}
+
+.repo__title {
+  padding: 1rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.repo__tags,
+.repo__langs {
+  margin-bottom: 2rem;
+}
+
+.repo__tagsTitle,
+.repo__langsTitle {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.repo__tagsContainer,
+.repo__langsContainer {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 1rem;
+  font-size: 1rem;
+}
+
+.repo__tag,
+.repo__lang {
+  background-color: var(--color-grey-light);
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.repo__description {
+  margin-bottom: 2rem;
+}
+
+.repo__descriptionTitle {
+  font-weight: 600;
+}
+
+.repo__ownerTitle {
+  font-weight: 600;
+}
+
+.repo__ownerImg img {
+  width: 15rem;
+  height: auto;
+}

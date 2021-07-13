@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import SearchResults from "./SearchResults";
 import { makeSearchRequestTC } from "../../redux/searchResult-reducer";
+import { setCurrentRepoAC } from "../../redux/currentRepo-reducer";
 
 class SearchResultsContainer extends React.Component {
   onScroll = (e) => {
@@ -23,6 +24,14 @@ class SearchResultsContainer extends React.Component {
       );
   };
 
+  // onClick(e) {
+  //   const repoId = +e.target.closest("div").id;
+  //   console.log(repoId);
+  //   const choosenRepo = this.props.results.find((el) => el.id === repoId);
+  //   console.log(choosenRepo);
+  //   this.props.setCurrentRepo(choosenRepo);
+  // }
+
   componentDidMount() {
     document.addEventListener("scroll", this.onScroll);
   }
@@ -36,6 +45,7 @@ class SearchResultsContainer extends React.Component {
       <SearchResults
         totalCount={this.props.totalCount}
         results={this.props.results}
+        // onClick={this.onClick.bind(this)}
       />
     );
   }
@@ -53,6 +63,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   makeSearchRequest: (searchKeyWords, pageSize, nextPage) => {
     dispatch(makeSearchRequestTC(searchKeyWords, pageSize, nextPage));
+  },
+  setCurrentRepo: (repo) => {
+    dispatch(setCurrentRepoAC(repo));
   },
 });
 
