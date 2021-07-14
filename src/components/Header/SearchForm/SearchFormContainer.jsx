@@ -10,9 +10,7 @@ import { compose } from "redux";
 import { withRouter } from "react-router";
 
 class SearchFormContainer extends React.Component {
-  // state = {
-  //   newSearching: false,
-  // };
+
 
   onSubmit = (formData) => {
     console.log(formData);
@@ -29,22 +27,13 @@ class SearchFormContainer extends React.Component {
 
     this.props.history.push("/");
 
-    // if (this.props.location.pathname != "/") {
-    //   console.log("NOT MAIN");
-    //   this.setState({
-    //     newSearching: true,
-    //   });
-    // }
+ 
   };
 
   render() {
     return (
-      <>
-        {/* {this.state.newSearching && <Redirect to="/" />}
-        {this.state.newSearching &&
-          console.log("newSearching", this.state.newSearching)} */}
+        
         <SearchFormRedux onSubmit={this.onSubmit} />
-      </>
     );
   }
 }

@@ -16,7 +16,6 @@ class RepoContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log("componentWillUnmount");
     this.props.clearCurrentRepo();
   }
 
@@ -35,7 +34,7 @@ class RepoContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) =>({
   title: state.repo.currentRepo.title,
   tags: state.repo.currentRepo.tags,
   langs: state.repo.currentRepo.langs,

@@ -24,13 +24,13 @@ class SearchResultsContainer extends React.Component {
       );
   };
 
-  // onClick(e) {
-  //   const repoId = +e.target.closest("div").id;
-  //   console.log(repoId);
-  //   const choosenRepo = this.props.results.find((el) => el.id === repoId);
-  //   console.log(choosenRepo);
-  //   this.props.setCurrentRepo(choosenRepo);
-  // }
+  onClick(e) {
+    const repoId = +e.target.closest("SearchItem").id;
+    console.log(repoId);
+    const choosenRepo = this.props.results.find((el) => el.id === repoId);
+    console.log(choosenRepo);
+    this.props.setCurrentRepo(choosenRepo);
+  }
 
   componentDidMount() {
     document.addEventListener("scroll", this.onScroll);

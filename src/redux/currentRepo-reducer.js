@@ -45,9 +45,15 @@ const currrentRepoReducer = (state = intialState, action) => {
       };
 
     case CLEAR_CURRENT_REPO: {
-      debugger;
       return {
-        currentRepo: null,
+        currentRepo: {
+    title: "",
+    tags: "",
+    langs: "",
+    description: "",
+    ownerName: "",
+    ownerImg: "",
+  },
         tagsAPI: "",
         langsAPI: "",
       };
