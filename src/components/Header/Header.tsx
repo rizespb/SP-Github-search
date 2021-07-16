@@ -4,7 +4,7 @@ import styles from "./Header.module.css";
 import SearchFormContainer from "./SearchForm/SearchFormContainer";
 import logo from "./../../assets/images/logo.png";
 
-const Header = () => {
+const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <Link to="/">

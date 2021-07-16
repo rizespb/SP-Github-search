@@ -7,7 +7,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import SearchResults from "./components/SearchResults/SearchResultsContainer";
 import RepoContainer from "./components/Repo/RepoContainer";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <HeaderContainer />
@@ -15,9 +15,9 @@ function App() {
       <Route path="/repo" render={() => <RepoContainer />} />
     </div>
   );
-}
+};
 
-const AppContainer = () => {
+const AppContainer: React.FC = () => {
   return (
     <BrowserRouter>
       <Provider store={store}>

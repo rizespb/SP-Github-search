@@ -5,14 +5,32 @@ import {
   makeSearchRequestTC,
   clearSearchResultsAC,
 } from "../../../redux/searchResult-reducer";
-import { Redirect } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { compose } from "redux";
 import { withRouter } from "react-router";
+import { TappState } from "../../../redux/redux-store";
 
-class SearchFormContainer extends React.Component {
+interface ImapStateProps {
+  pageSize: number;
+  currentPage: number;
+}
 
+interface ImapDispatchProps {
+  makeSearchRequest: (
+    searchKeywords: string,
+    pageSize: number,
+    currentPage: number
+  ) => void;
+  clearSearchResults: () => void;
+}
 
-  onSubmit = (formData) => {
+interface Iprops
+  extends ImapStateProps,
+    ImapDispatchProps,
+    RouteComponentProps {}
+
+class SearchFormContainer extends React.Component<Iprops> {
+  onSubmit = (formData: any): void => {
     console.log(formData);
 
     // Очищаем результаты предыдущего запроса
@@ -26,25 +44,24 @@ class SearchFormContainer extends React.Component {
     );
 
     this.props.history.push("/");
-
- 
   };
 
   render() {
-    return (
-        
-        <SearchFormRedux onSubmit={this.onSubmit} />
-    );
+    return <SearchFormRedux onSubmit={this.onSubmit} />;
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: TappState): ImapStateProps => ({
   pageSize: state.searchResults.pageSize,
   currentPage: state.searchResults.currentPage,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  makeSearchRequest: (searchKeywords, pageSize, currentPage) => {
+const mapDispatchToProps = (dispatch: any): ImapDispatchProps => ({
+  makeSearchRequest: (
+    searchKeywords: string,
+    pageSize: number,
+    currentPage: number
+  ) => {
     dispatch(makeSearchRequestTC(searchKeywords, pageSize, currentPage));
   },
 
@@ -56,4 +73,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(SearchFormContainer);
+)(SearchFormContainer) as React.ComponentType;

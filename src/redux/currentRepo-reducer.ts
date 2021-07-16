@@ -1,4 +1,5 @@
 import { repoAPI } from "../api/api";
+import { Irepo } from "../types/types";
 
 const SET_CURRENT_REPO = "currentRepo/SET_CURRENT_REPO";
 const SET_CURRENT_REPO_ADDITIONAL_INFO =
@@ -8,17 +9,22 @@ const CLEAR_CURRENT_REPO = "currentRepo/CLEAR_CURRENT_REPO";
 const intialState = {
   currentRepo: {
     title: "",
-    tags: "",
-    langs: "",
+    tags: [],
+    langs: [],
     description: "",
     ownerName: "",
     ownerImg: "",
-  },
+  } as Irepo,
   tagsAPI: "",
   langsAPI: "",
 };
 
-const currrentRepoReducer = (state = intialState, action) => {
+type TintialState = typeof intialState;
+
+const currrentRepoReducer = (
+  state = intialState,
+  action: any
+): TintialState => {
   switch (action.type) {
     case SET_CURRENT_REPO:
       return {
@@ -47,13 +53,13 @@ const currrentRepoReducer = (state = intialState, action) => {
     case CLEAR_CURRENT_REPO: {
       return {
         currentRepo: {
-    title: "",
-    tags: "",
-    langs: "",
-    description: "",
-    ownerName: "",
-    ownerImg: "",
-  },
+          title: "",
+          tags: [],
+          langs: [],
+          description: "",
+          ownerName: "",
+          ownerImg: "",
+        },
         tagsAPI: "",
         langsAPI: "",
       };
@@ -66,26 +72,42 @@ const currrentRepoReducer = (state = intialState, action) => {
 
 ////////////////////////////////
 // ActionCreators
-export const setCurrentRepoAC = (item) => ({
+// Set current repo to state
+interface IsetCurrentRepoAC {
+  type: typeof SET_CURRENT_REPO;
+  item: Irepo;
+}
+export const setCurrentRepoAC = (item: Irepo): IsetCurrentRepoAC => ({
   type: SET_CURRENT_REPO,
   item,
 });
 
-const setCurrentRepoInfoAC = (tags, langs) => ({
+// Set additional repo info to state
+interface IsetCurrentRepoInfoAC {
+  type: typeof SET_CURRENT_REPO_ADDITIONAL_INFO;
+  payload: { tags: Array<string>; langs: Array<string> };
+}
+const setCurrentRepoInfoAC = (
+  tags: Array<string>,
+  langs: Array<string>
+): IsetCurrentRepoInfoAC => ({
   type: SET_CURRENT_REPO_ADDITIONAL_INFO,
   payload: { tags, langs },
 });
 
-export const clearCurrentRepoAC = () => ({
+// Clear current repo in state
+interface IclearCurrentRepoAC {
+  type: typeof CLEAR_CURRENT_REPO;
+}
+export const clearCurrentRepoAC = (): IclearCurrentRepoAC => ({
   type: CLEAR_CURRENT_REPO,
 });
 
 ////////////////////////////////
 // ThunkCreators
-export const getRepoTC = (repoFullName) => {
-  return async (dispatch) => {
+export const getRepoTC = (repoFullName: string) => {
+  return async (dispatch: any) => {
     const repo = await repoAPI.getRepoByFullName(repoFullName);
-    console.log(repo);
     dispatch(setCurrentRepoAC(repo.data));
 
     const response = await Promise.all([
@@ -93,8 +115,13 @@ export const getRepoTC = (repoFullName) => {
       repoAPI.getRepoInfo(repo.data.languages_url),
     ]);
 
-    console.log(response);
-    dispatch(setCurrentRepoInfoAC(response[0].data, response[1].data));
+    const tags: Array<string> = response[0].data.map((el: any) => {
+      return el.name;
+    });
+
+    const langs: Array<string> = Object.keys(response[1].data);
+
+    dispatch(setCurrentRepoInfoAC(tags, langs));
   };
 };
 
