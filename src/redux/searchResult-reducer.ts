@@ -10,7 +10,7 @@ const CLEAR_SEARCH_RESULTS = "searchResult/CLEAR_SEARCH_RESULTS";
 const intialState = {
   results: [] as Array<IsearchItem>,
   totalCount: null as number | null,
-  pageSize: 20,
+  pageSize: 5,
   currentPage: 0,
   searchKeyWords: "",
   isFetching: false,

@@ -5,7 +5,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  cursor: pointer;
 }
 
 .searchItem:first-child {
@@ -21,4 +20,11 @@
 .searchItem__description {
   font-size: 1.4rem;
   text-align: left;
+}
+
+.searchItem__addToFavorite {
+  font-size: 1.4rem;
+  text-align: rigth;
+  align-self: flex-end;
+  cursor: pointer;
 }

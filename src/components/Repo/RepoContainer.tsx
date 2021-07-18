@@ -36,6 +36,10 @@ class RepoContainer extends React.Component<Iprops> {
     this.props.getRepo(this.state.repoFullName);
   }
 
+  componentDidUpdate() {
+    this.props.getRepo(this.state.repoFullName);
+  }
+
   componentWillUnmount() {
     this.props.clearCurrentRepo();
   }

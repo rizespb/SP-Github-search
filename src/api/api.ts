@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "https://api.github.com/",
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 interface IsearchAPI {
@@ -34,7 +34,7 @@ export const repoAPI: IrepoAPI = {
 
   getRepoInfo(url) {
     return axios.get(url, {
-      withCredentials: true,
+      // withCredentials: true,
     });
   },
 };

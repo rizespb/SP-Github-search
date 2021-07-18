@@ -5,6 +5,10 @@ import { makeSearchRequestTC } from "../../redux/searchResult-reducer";
 import { setCurrentRepoAC } from "../../redux/currentRepo-reducer";
 import { Irepo, IsearchItem } from "../../types/types";
 import { TappState } from "../../redux/redux-store";
+import {
+  addRepoToFavoritesTC,
+  removeRepoFromFavoritesTC,
+} from "../../redux/favorites-reducer";
 
 interface ImapStateProps {
   totalCount: number | null;
@@ -13,6 +17,7 @@ interface ImapStateProps {
   pageSize: number;
   currentPage: number;
   isFetching: boolean;
+  favorites: Array<IsearchItem>;
 }
 
 interface ImapDispatchProps {
@@ -22,14 +27,18 @@ interface ImapDispatchProps {
     nextPage: number
   ) => void;
   setCurrentRepo: (repo: Irepo) => void;
+  addRepoToFavorites: (repo: IsearchItem) => void;
+  removeRepoFromFavorites: (id: number) => void;
 }
 
 interface Iprops extends ImapStateProps, ImapDispatchProps {}
 
 class SearchResultsContainer extends React.Component<Iprops> {
+  // Динамическая подгрузка результатов поиска
   onScroll = (e: any): void => {
-    // Высота всего документа
+    if (this.props.results.length === 0) return;
 
+    // Высота всего документа
     const scrollHeight = e.target.documentElement.scrollHeight;
     // Высота окна браузера
     const windowHeight = window.innerHeight;
@@ -47,12 +56,29 @@ class SearchResultsContainer extends React.Component<Iprops> {
       );
   };
 
+  onClickFavorite = (e: any): void => {
+    const target = e.target;
+    if (target.classList.contains("addToFavorite")) {
+      const repoId: number = Number(target.closest(".searchItem").dataset.id);
+      const choosenRepo: any = this.props.results.find(
+        (el) => el.id === repoId
+      );
+
+      this.props.addRepoToFavorites(choosenRepo);
+    } else if (target.classList.contains("removeFromFavorite")) {
+      const repoId: number = Number(target.closest(".searchItem").dataset.id);
+      this.props.removeRepoFromFavorites(repoId);
+    }
+  };
+
   componentDidMount() {
     document.addEventListener("scroll", this.onScroll);
+    document.addEventListener("click", this.onClickFavorite);
   }
 
   componentWillUnmount() {
     document.removeEventListener("scroll", this.onScroll);
+    document.removeEventListener("click", this.onClickFavorite);
   }
 
   render() {
@@ -72,14 +98,24 @@ const mapStateToProps = (state: TappState): ImapStateProps => ({
   pageSize: state.searchResults.pageSize,
   currentPage: state.searchResults.currentPage,
   isFetching: state.searchResults.isFetching,
+  favorites: state.bookmarks.favorites,
 });
 
 const mapDispatchToProps = (dispatch: any): ImapDispatchProps => ({
   makeSearchRequest: (searchKeyWords, pageSize, nextPage) => {
     dispatch(makeSearchRequestTC(searchKeyWords, pageSize, nextPage));
   },
+
   setCurrentRepo: (repo) => {
     dispatch(setCurrentRepoAC(repo));
+  },
+
+  addRepoToFavorites: (repo) => {
+    dispatch(addRepoToFavoritesTC(repo));
+  },
+
+  removeRepoFromFavorites: (id) => {
+    dispatch(removeRepoFromFavoritesTC(id));
   },
 });
 

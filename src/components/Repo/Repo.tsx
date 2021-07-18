@@ -60,7 +60,7 @@ const Repo: React.FC<Iprops> = (props) => {
         <div className={styles.repo__ownerTitle}>Owner:</div>
         <div className={styles.repo__ownerName}>{props.ownerName}</div>
         <div className={styles.repo__ownerImg}>
-          <img src={props.ownerImg} />
+          <img src={props.ownerImg} alt="Avatar" />
         </div>
       </div>
     </div>
