@@ -36,8 +36,14 @@ class RepoContainer extends React.Component<Iprops> {
     this.props.getRepo(this.state.repoFullName);
   }
 
-  componentDidUpdate() {
-    this.props.getRepo(this.state.repoFullName);
+  componentDidUpdate(prevProps: Iprops) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.props.getRepo(this.props.location.pathname.slice(6));
+
+      this.setState({
+        repoFullName: this.props.location.pathname.slice(6),
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -45,7 +51,6 @@ class RepoContainer extends React.Component<Iprops> {
   }
 
   render() {
-    console.log(this.state.repoFullName);
     return (
       <Repo
         title={this.props.title}

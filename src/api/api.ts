@@ -1,8 +1,13 @@
 import axios from "axios";
 
+const my_token = "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";
+
 const instance = axios.create({
   baseURL: "https://api.github.com/",
   // withCredentials: true,
+  headers: {
+    Authorization: `token ${my_token}`,
+  },
 });
 
 interface IsearchAPI {
@@ -29,12 +34,18 @@ interface IrepoAPI {
 
 export const repoAPI: IrepoAPI = {
   getRepoByFullName(fullName) {
-    return instance.get(`repos/${fullName}`);
+    return instance.get(`repos/${fullName}`, {
+      headers: {
+        Authorization: `token ${my_token}`,
+      },
+    });
   },
 
   getRepoInfo(url) {
     return axios.get(url, {
-      // withCredentials: true,
+      headers: {
+        Authorization: `token ${my_token}`,
+      },
     });
   },
 };
