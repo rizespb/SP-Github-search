@@ -26,4 +26,5 @@
   color: var(--color-grey-light);
   border: 1px solid var(--color-search-border);
   border-radius: 3px;
+  cursor: pointer;
 }

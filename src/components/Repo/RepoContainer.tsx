@@ -3,10 +3,31 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { compose } from "redux";
 import Repo from "./Repo";
+import { RouteComponentProps } from "react-router-dom";
 import { getRepoTC } from "../../redux/currentRepo-reducer";
 import { clearCurrentRepoAC } from "../../redux/currentRepo-reducer";
+import { TappState } from "../../redux/redux-store";
 
-class RepoContainer extends React.Component {
+interface ImapStateProps {
+  title: string;
+  tags: Array<string>;
+  langs: Array<string>;
+  description: string;
+  ownerName: string;
+  ownerImg: string;
+}
+
+interface ImapDispatchProps {
+  getRepo: (fullName: string) => void;
+  clearCurrentRepo: () => void;
+}
+
+interface Iprops
+  extends ImapStateProps,
+    ImapDispatchProps,
+    RouteComponentProps {}
+
+class RepoContainer extends React.Component<Iprops> {
   state = {
     repoFullName: this.props.location.pathname.slice(6),
   };
@@ -15,12 +36,21 @@ class RepoContainer extends React.Component {
     this.props.getRepo(this.state.repoFullName);
   }
 
+  componentDidUpdate(prevProps: Iprops) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.props.getRepo(this.props.location.pathname.slice(6));
+
+      this.setState({
+        repoFullName: this.props.location.pathname.slice(6),
+      });
+    }
+  }
+
   componentWillUnmount() {
     this.props.clearCurrentRepo();
   }
 
   render() {
-    console.log(this.state.repoFullName);
     return (
       <Repo
         title={this.props.title}
@@ -34,7 +64,7 @@ class RepoContainer extends React.Component {
   }
 }
 
-const mapStateToProps = (state) =>({
+const mapStateToProps = (state: TappState): ImapStateProps => ({
   title: state.repo.currentRepo.title,
   tags: state.repo.currentRepo.tags,
   langs: state.repo.currentRepo.langs,
@@ -43,8 +73,8 @@ const mapStateToProps = (state) =>({
   ownerImg: state.repo.currentRepo.ownerImg,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getRepo: (fullName) => {
+const mapDispatchToProps = (dispatch: any): ImapDispatchProps => ({
+  getRepo: (fullName: string) => {
     dispatch(getRepoTC(fullName));
   },
 
@@ -56,4 +86,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(RepoContainer);
+)(RepoContainer) as React.ComponentType;
